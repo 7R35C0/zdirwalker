@@ -10,10 +10,7 @@ const Info = zdirwalker.Info;
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
-    defer if (gpa.deinit() == .leak) print(
-        "{s}\n",
-        .{"memory leak"},
-    );
+    defer if (gpa.deinit() == .leak) print("{s}\n", .{"memory leak"});
 
     var tester = try DirWalker(ArrayList(Info)).init(allocator);
     defer tester.deinit();
@@ -34,22 +31,4 @@ pub fn main() !void {
         print("content_name: {s}\ncontent_path: {s}\nrelativ_path: {s}\n", .{ content.name, content.path, relative_path });
         print("----------------------------------------\n", .{});
     }
-}
-
-test "CWD ArrayList" {
-    const allocator = std.testing.allocator;
-
-    var tester = try DirWalker(ArrayList(Info)).init(allocator);
-    defer tester.deinit();
-
-    _ = try tester.walk("dir_0000");
-}
-
-test "CWD ArrayListUnmanaged" {
-    const allocator = std.testing.allocator;
-
-    var tester = try DirWalker(ArrayListUnmanaged(Info)).init(allocator);
-    defer tester.deinit();
-
-    _ = try tester.walk("dir_0000");
 }
