@@ -1,0 +1,23 @@
+.{
+    .name = "zdirwalker",
+    .version = "0.1.0",
+    // .minimum_zig_version = "0.12.0",
+
+    .dependencies = .{
+        //.example = .{
+        //    .url = "https://example.com/foo.tar.gz",
+        //    .hash = "...",
+        //    .path = "foo",
+        //    .lazy = false,
+        //},
+    },
+
+    .paths = .{
+        "examples",
+        "src",
+        "build.zig",
+        "build.zig.zon",
+        "LICENSE",
+        "README.md",
+    },
+}
