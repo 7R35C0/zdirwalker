@@ -18,7 +18,10 @@ pub fn main() !void {
     tester = try tester.walk("dir_0000");
 
     print("========================================\n", .{});
-    print("root_name: {s}\nroot_path: {s}\n", .{ tester.root.name, tester.root.path });
+    print(
+        "root_name:  {s}\n  root_path:  {s}\n",
+        .{ tester.root.name, tester.root.path },
+    );
     print("========================================\n", .{});
 
     for (tester.content.items) |content| {
@@ -28,7 +31,10 @@ pub fn main() !void {
         );
         defer allocator.free(relative_path);
 
-        print("content_name: {s}\ncontent_path: {s}\nrelativ_path: {s}\n", .{ content.name, content.path, relative_path });
+        print(
+            "content_name:  {s}\n  content_path:  {s}\n  relativ_path:  {s}\n",
+            .{ content.name, content.path, relative_path },
+        );
         print("----------------------------------------\n", .{});
     }
 }
