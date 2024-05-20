@@ -6,7 +6,7 @@
     .dependencies = .{
         .zdirwalker = .{
             .url = "https://github.com/7R35C0/zdirwalker/releases/download/zdirwalker-0.1.0/zdirwalker-0.1.0.tar.gz",
-            .hash = "1220b760ae96bebb14e9975ada24548b1afaa93408c8a9773e778bd42bab2dbddd46",
+            // .hash = "...",
             // .path = "foo",
             // .lazy = false,
         },
