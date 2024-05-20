@@ -75,7 +75,6 @@ fn setupLibrary(b: *std.Build, cfg: Config) *std.Build.Step.Compile {
     return lib;
 }
 
-//: see b.lazyDependency("freetype"...
 fn setupTest(b: *std.Build, cfg: Config) *std.Build.Step.Compile {
     const tst = b.addTest(.{
         .name = "freetype-tests",
