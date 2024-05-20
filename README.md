@@ -140,6 +140,9 @@ this purpose.
 Step `zig build kcov` assumes that [kcov](https://github.com/SimonKagstrom/kcov)
 is already installed on system.
 
+The `standalone` directory contains an example project with `zdirwalker` as a
+dependency, you just need to add the hash.
+
 The module was made in an attempt to learn the zig language and is not very
 useful. Zig has such a solution by default and I used in `build.zig` module file (see `setupExamples()`).
 
