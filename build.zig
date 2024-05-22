@@ -51,17 +51,18 @@ pub fn build(b: *std.Build) void {
     //  * zig-cache
     //  * zig-out
     //  * zig-out/bin
-    //  * zig-out/doc
     //  * zig-out/cov
+    //  * zig-out/doc
+    //  * zig-out/egs
     //  * zig-out/lib
     setupRemove(b);
 
-    // Run specific example (contain multiple steps):
-    //  * examples/cwddir
-    //  * examples/cwddir-oneup
-    //  * examples/exedir
-    //  * examples/exedir-oneup
-    //  * examples/exedir-twoup-onedown
+    // Run specific example (zig-out/egs, contain multiple steps):
+    //  * egs/cwddir
+    //  * egs/cwddir-oneup
+    //  * egs/exedir
+    //  * egs/exedir-oneup
+    //  * egs/exedir-twoup-onedown
     setupExample(b, cfg, mod);
 }
 
@@ -72,6 +73,7 @@ fn setupModule(b: *std.Build, cfg: Config) *std.Build.Module {
     );
 }
 
+// output: zig-out/lib
 fn setupLibrary(b: *std.Build, cfg: Config) *std.Build.Step.Compile {
     const lib = b.addStaticLibrary(.{
         .name = cfg.name,
@@ -113,6 +115,7 @@ fn setupTest(b: *std.Build, cfg: Config) *std.Build.Step.Compile {
     return tst;
 }
 
+// output: zig-out/cov
 fn setupCoverage(b: *std.Build, tst: *std.Build.Step.Compile) void {
     const cov_run = b.addSystemCommand(&.{
         "kcov",
@@ -146,6 +149,7 @@ fn setupCoverage(b: *std.Build, tst: *std.Build.Step.Compile) void {
     cov_step.dependOn(&cov_remove.step);
 }
 
+// output: zig-out/doc
 fn setupDocumentation(b: *std.Build, lib: *std.Build.Step.Compile) void {
     const doc_install = b.addInstallDirectory(.{
         .install_dir = .prefix,
@@ -163,7 +167,7 @@ fn setupDocumentation(b: *std.Build, lib: *std.Build.Step.Compile) void {
 fn setupFormat(b: *std.Build) void {
     const fmt = b.addFmt(.{
         .paths = &.{
-            "examples",
+            "egs",
             "src",
             "standalone",
             "build.zig",
@@ -180,50 +184,59 @@ fn setupFormat(b: *std.Build) void {
 }
 
 fn setupRemove(b: *std.Build) void {
-    const rmdir_cache_step = b.step(
+    const rm_cache_step = b.step(
         "rm-cache",
         "Remove cache           (zig-cache)",
     );
-    rmdir_cache_step.dependOn(&b.addRemoveDirTree(b.cache_root.path.?).step);
+    rm_cache_step.dependOn(&b.addRemoveDirTree(b.cache_root.path.?).step);
 
-    const rmdir_out_step = b.step(
+    const rm_out_step = b.step(
         "rm-out",
         "Remove output          (zig-out)",
     );
-    rmdir_out_step.dependOn(&b.addRemoveDirTree(b.install_path).step);
+    rm_out_step.dependOn(&b.addRemoveDirTree(b.install_path).step);
 
-    const rmdir_bin_step = b.step(
+    const rm_bin_step = b.step(
         "rm-bin",
         "Remove binary          (zig-out/bin)",
     );
-    rmdir_bin_step.dependOn(&b.addRemoveDirTree(b.exe_dir).step);
+    rm_bin_step.dependOn(&b.addRemoveDirTree(b.exe_dir).step);
 
-    const rmdir_doc_step = b.step(
-        "rm-doc",
-        "Remove documentation   (zig-out/doc)",
-    );
-    rmdir_doc_step.dependOn(&b.addRemoveDirTree(b.pathJoin(
-        &[_][]const u8{ b.install_path, "doc" },
-    )).step);
-
-    const rmdir_cov_step = b.step(
+    const rm_cov_step = b.step(
         "rm-cov",
         "Remove code coverage   (zig-out/cov)",
     );
-    rmdir_cov_step.dependOn(&b.addRemoveDirTree(b.pathJoin(
+    rm_cov_step.dependOn(&b.addRemoveDirTree(b.pathJoin(
         &[_][]const u8{ b.install_path, "cov" },
     )).step);
 
-    const rmdir_lib_step = b.step(
+    const rm_doc_step = b.step(
+        "rm-doc",
+        "Remove documentation   (zig-out/doc)",
+    );
+    rm_doc_step.dependOn(&b.addRemoveDirTree(b.pathJoin(
+        &[_][]const u8{ b.install_path, "doc" },
+    )).step);
+
+    const rm_egs_step = b.step(
+        "rm-egs",
+        "Remove examples        (zig-out/egs)",
+    );
+    rm_egs_step.dependOn(&b.addRemoveDirTree(b.pathJoin(
+        &[_][]const u8{ b.install_path, "egs" },
+    )).step);
+
+    const rm_lib_step = b.step(
         "rm-lib",
         "Remove library         (zig-out/lib)",
     );
-    rmdir_lib_step.dependOn(&b.addRemoveDirTree(b.lib_dir).step);
+    rm_lib_step.dependOn(&b.addRemoveDirTree(b.lib_dir).step);
 }
 
+// output: zig-out/egs
 fn setupExample(b: *std.Build, cfg: Config, mod: *std.Build.Module) void {
     var egs_dir = std.fs.openDirAbsolute(
-        b.path("examples").getPath(b),
+        b.path("egs").getPath(b),
         .{ .iterate = true },
     ) catch |err| {
         print("{s}: {!}\n", .{ cfg.name, err });
@@ -245,7 +258,7 @@ fn setupExample(b: *std.Build, cfg: Config, mod: *std.Build.Module) void {
             const egs_name = egs.basename;
             const egs_path = std.fs.path.resolve(
                 b.allocator,
-                &[_][]const u8{ "examples", egs.path, "main.zig" },
+                &[_][]const u8{ "egs", egs.path, "main.zig" },
             ) catch |err| {
                 print("{s}: {!}\n", .{ cfg.name, err });
                 return;
@@ -271,7 +284,7 @@ fn setupExample(b: *std.Build, cfg: Config, mod: *std.Build.Module) void {
                 .{
                     .dest_dir = .{
                         .override = .{
-                            .custom = "examples",
+                            .custom = "egs",
                         },
                     },
                 },
