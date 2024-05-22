@@ -101,7 +101,7 @@ to see the differences.
 zdirwalker$ zig build run-cwddir
 ...
 zdirwalker$ cd zig-out
-zdirwalker/zig-out$ ./examples/cwddir
+zdirwalker/zig-out$ ./egs/cwddir
 ...
 ```
 
@@ -121,8 +121,9 @@ fmt                          Silent formatting
 rm-cache                     Remove cache           (zig-cache)
 rm-out                       Remove output          (zig-out)
 rm-bin                       Remove binary          (zig-out/bin)
-rm-doc                       Remove documentation   (zig-out/doc)
 rm-cov                       Remove code coverage   (zig-out/cov)
+rm-doc                       Remove documentation   (zig-out/doc)
+rm-egs                       Remove examples        (zig-out/egs)
 rm-lib                       Remove library         (zig-out/lib)
 run-cwddir                   Run example cwddir
 run-cwddir-oneup             Run example cwddir-oneup
@@ -148,7 +149,7 @@ The `standalone` directory contains an example project with `zdirwalker` as a
 dependency, you just need to add the hash.
 
 The module was made in an attempt to learn the zig language and is not very
-useful. Zig has such a solution by default and I used in `build.zig` module file (see `setupExamples()`).
+useful. Zig has such a solution by default and I used in `build.zig` module file (see `setupExample()`).
 
 However, for situations with many directories/files, and which need to be
 traversed often, it can be useful.
