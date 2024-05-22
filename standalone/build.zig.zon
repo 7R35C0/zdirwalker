@@ -10,13 +10,6 @@
             // .path = "foo",
             // .lazy = false,
         },
-
-        //.example = .{
-        //    .url = "https://example.com/foo.tar.gz",
-        //    .hash = "...",
-        //    .path = "foo",
-        //    .lazy = false,
-        //},
     },
 
     .paths = .{
