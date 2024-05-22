@@ -19,10 +19,12 @@ pub fn main() !void {
     //+ in this case `<some_path>/zdirwalker`
     tester = try tester.walk(".");
 
+    print("========================================\n", .{});
     print(
         "root_name:  {s}\n  root_path:  {s}\n",
         .{ tester.root.name, tester.root.path },
     );
+    print("========================================\n", .{});
 
     //+ this can be a very long list, we will only print the first 5 entries
     var index: usize = 0;
@@ -32,6 +34,8 @@ pub fn main() !void {
                 "cont_name:  {s}\n  cont_path:  {s}\n",
                 .{ cont.name, cont.path },
             );
+            print("----------------------------------------\n", .{});
+
             index += 1;
         } else break;
     }

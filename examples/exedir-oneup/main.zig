@@ -27,15 +27,18 @@ pub fn main() !void {
 
     tester = try tester.walk(directory);
 
+    print("========================================\n", .{});
     print(
         "root_name:  {s}\n  root_path:  {s}\n",
         .{ tester.root.name, tester.root.path },
     );
+    print("========================================\n", .{});
 
     for (tester.content.items) |cont| {
         print(
             "cont_name:  {s}\n  cont_path:  {s}\n",
             .{ cont.name, cont.path },
         );
+        print("----------------------------------------\n", .{});
     }
 }
