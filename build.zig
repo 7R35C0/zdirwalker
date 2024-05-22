@@ -169,7 +169,6 @@ fn setupFormat(b: *std.Build) void {
         .paths = &.{
             "egs",
             "src",
-            "standalone",
             "build.zig",
             "build.zig.zon",
         },
