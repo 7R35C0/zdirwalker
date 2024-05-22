@@ -113,18 +113,22 @@ The steps available to use are:
 zdirwalker$ zig build -l
 install (default)            Copy build artifacts to prefix path
 uninstall                    Remove build artifacts from prefix path
-lib                          Build and install library
-test                         Run tests suite
-kcov                         Code coverage with kcov
-docs                         Generate documentation
-fmt                          Silent formatting zig files
-rmc                          Remove cache directory
-rmo                          Remove output directory
-run-cwddir                   Run 'cwddir' example
-run-cwddir-oneup             Run 'cwddir-oneup' example
-run-exedir                   Run 'exedir' example
-run-exedir-oneup             Run 'exedir-oneup' example
-run-exedir-twoup-onedown     Run 'exedir-twoup-onedown' example
+lib                          Build static library   (zig-out/lib)
+tst                          Run tests
+cov                          Generate code coverage (zig-out/cov)
+doc                          Generate documentation (zig-out/doc)
+fmt                          Silent formatting
+rm-cache                     Remove cache           (zig-cache)
+rm-out                       Remove output          (zig-out)
+rm-bin                       Remove binary          (zig-out/bin)
+rm-doc                       Remove documentation   (zig-out/doc)
+rm-cov                       Remove code coverage   (zig-out/cov)
+rm-lib                       Remove library         (zig-out/lib)
+run-cwddir                   Run example cwddir
+run-cwddir-oneup             Run example cwddir-oneup
+run-exedir                   Run example exedir
+run-exedir-oneup             Run example exedir-oneup
+run-exedir-twoup-onedown     Run example exedir-twoup-onedown
 ```
 
 Examples are:
@@ -132,12 +136,12 @@ Examples are:
 * `cwddir`, ... - use terminal directory as `cwd`
 * `exedir`, ... - use executable directory as `cwd`
 
-For documentation (`zig-out/docs/index.html`) and the code coverage report
-(`zig-out/kcov/index.html`), use a live http server.
+For documentation (`zig-out/doc/index.html`) and the code coverage report
+(`zig-out/cov/index.html`), use a live http server.
 The `.vscode/extensions.json` file contains an extension that can be used for
 this purpose.
 
-Step `zig build kcov` assumes that [kcov](https://github.com/SimonKagstrom/kcov)
+Step `zig build cov` assumes that [kcov](https://github.com/SimonKagstrom/kcov)
 is already installed on system.
 
 The `standalone` directory contains an example project with `zdirwalker` as a
