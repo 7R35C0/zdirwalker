@@ -23,6 +23,7 @@ pub fn main() !void {
 
     //+ `".."` is one level up from the current working directory (cwd)
     //+ usually cwd is the project directory (i.e. the build.zig directory)
+    //+ in this case `<some_path>`
     tester = try tester.walk("..");
 
     print("========================================\n", .{});

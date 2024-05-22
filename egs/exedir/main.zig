@@ -15,7 +15,7 @@ pub fn main() !void {
     defer tester.deinit();
 
     //+ `directory` is the executable directory
-    //+ in this case `<some_path>/zdirwalker/zig-out/examples`
+    //+ in this case `<some_path>/zdirwalker/zig-out/egs`
     var buffer: [std.fs.MAX_PATH_BYTES]u8 = undefined;
     const directory = try std.fs.selfExeDirPath(&buffer);
 

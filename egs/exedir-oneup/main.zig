@@ -34,11 +34,17 @@ pub fn main() !void {
     );
     print("========================================\n", .{});
 
+    //+ this can be a very long list, we will only print the first 5 entries
+    var index: usize = 0;
     for (tester.content.items) |cont| {
-        print(
-            "cont_name:  {s}\n  cont_path:  {s}\n",
-            .{ cont.name, cont.path },
-        );
-        print("----------------------------------------\n", .{});
+        if (index < 5) {
+            print(
+                "cont_name:  {s}\n  cont_path:  {s}\n",
+                .{ cont.name, cont.path },
+            );
+            print("----------------------------------------\n", .{});
+
+            index += 1;
+        } else break;
     }
 }
